@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Agendamento - Barbearia</title>
+    <link rel="stylesheet" href="style.css"> <!-- Verifique o caminho correto -->
+</head>
+<body>
+    <header>
+        <div class="header-container">
+            <img src="assets/logo.svg" alt="Logo da Barbearia" class="logo">
+        </div>
+    </header>
+    <main>
+        <section class="booking-section">
+            <h1>Agende Seu Corte</h1>
+            <p>Preencha os detalhes abaixo para agendar seu horário.</p>
+            <form action="/agendar" method="post" id="agendamento-form">
+                <div class="form-group">
+                    <label for="nome">Nome:</label>
+                    <input type="text" id="nome" name="nome" placeholder="Seu nome" required>
+                </div>
+                <div class="form-group">
+                    <label for="tipoCorte">Tipo de Corte:</label>
+                    <select id="tipoCorte" name="tipoCorte" required>
+                        <option value="Corte normal">Corte normal</option>
+                        <option value="Barba completa">Barba completa</option>
+                        <option value="Corte e barba">Corte e barba</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="dataHora">Data e Hora:</label>
+                    <input type="datetime-local" id="dataHora" name="dataHora" required>
+                </div>
+                <button type="submit" class="submit-button">Agendar</button>
+            </form>
+        </section>
+    </main>
+</body>
+</html>
