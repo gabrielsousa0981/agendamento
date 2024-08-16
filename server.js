@@ -1,25 +1,18 @@
 const express = require('express');
 const mongoose = require('mongoose');
-const path = require('path');
-const agendamentosRouter = require('./routes/agendamentos');
-const tipoCortesRouter = require('./routes/tipoCortes'); // Corrigido para tipoCortes
+const agendamentosRouter = require('./routes/agendamentos'); // Ajuste o caminho conforme necessário
 
 const app = express();
 const PORT = process.env.PORT || 3000;
 
 // Middleware para parsing de JSON
 app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
 
-// Servir arquivos estáticos
-app.use(express.static(path.join(__dirname, 'public')));
-
-// Usar os roteadores
+// Usar o roteador de agendamentos
 app.use('/agendamentos', agendamentosRouter);
-app.use('/tipoCortes', tipoCortesRouter); // Corrigido para tipoCortes
 
 // Conectar ao MongoDB
-mongoose.connect('mongodb://localhost:27017/agendamento-barbearia', {
+mongoose.connect('mongodb://localhost:27017/nomeDoSeuBancoDeDados', {
     useNewUrlParser: true,
     useUnifiedTopology: true
 }).then(() => {

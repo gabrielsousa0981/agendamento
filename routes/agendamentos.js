@@ -5,22 +5,18 @@ const Agendamento = require('../models/Agendamento');
 // Criar um novo agendamento
 router.post('/', async (req, res) => {
     try {
-        const { nome, tipoCorte, dataHora } = req.body;
-        const agendamento = new Agendamento({ nome, tipoCorte, dataHora });
-        await agendamento.save();
-        res.status(201).json(agendamento);
-    } catch (err) {
-        res.status(400).json({ message: err.message });
-    }
-});
+        const { nomeCliente, tipoCorte, dataHora } = req.body;
 
-// Obter todos os agendamentos
-router.get('/', async (req, res) => {
-    try {
-        const agendamentos = await Agendamento.find();
-        res.status(200).json(agendamentos);
+        if (!nomeCliente || !tipoCorte || !dataHora) {
+            return res.status(400).json({ message: 'Todos os campos são obrigatórios.' });
+        }
+
+        const novoAgendamento = new Agendamento({ nomeCliente, tipoCorte, dataHora });
+        await novoAgendamento.save();
+
+        res.status(201).json(novoAgendamento);
     } catch (err) {
-        res.status(500).json({ message: err.message });
+        res.status(400).json({ message: `Erro ao criar agendamento: ${err.message}` });
     }
 });
 

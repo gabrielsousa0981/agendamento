@@ -1,9 +1,12 @@
+// models/Agendamento.js
 const mongoose = require('mongoose');
 
-const agendamentoSchema = new mongoose.Schema({
-    nome: { type: String, required: true },
-    tipoCorte: { type: String, required: true },
+const AgendamentoSchema = new mongoose.Schema({
+    nomeCliente: { type: String, required: true },
+    tipoCorte: { type: mongoose.Schema.Types.ObjectId, ref: 'TipoCorte', required: true },
     dataHora: { type: Date, required: true }
 });
 
-module.exports = mongoose.model('Agendamento', agendamentoSchema);
+const Agendamento = mongoose.model('Agendamento', AgendamentoSchema);
+
+module.exports = Agendamento;
