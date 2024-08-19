@@ -1,10 +1,9 @@
 const mongoose = require('mongoose');
 
-const tipoCorteSchema = new mongoose.Schema({
-    tipoCorte: {
-        type: String,
-        required: true
-    }
-});
+const TipoCorteSchema = new mongoose.Schema({
+    tipoCorte: { type: String, required: true }
+}, { timestamps: false });
 
-module.exports = mongoose.model('TipoCorte', tipoCorteSchema);
+const TipoCorte = mongoose.model('TipoCorte', TipoCorteSchema);
+
+module.exports = TipoCorte;

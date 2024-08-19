@@ -1,22 +1,26 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const path = require('path');
+const tipoCortesRouter = require('./routes/tipoCortes');
 const agendamentosRouter = require('./routes/agendamentos');
-const tipoCortesRouter = require('./routes/tipoCortes'); // Corrigido para tipoCortes
 
 const app = express();
 const PORT = process.env.PORT || 3000;
 
 // Middleware para parsing de JSON
 app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
 
-// Servir arquivos estáticos
-app.use(express.static(path.join(__dirname, 'public')));
+// Servir arquivos estáticos da pasta 'tela_agendamento'
+app.use(express.static(path.join(__dirname, 'tela_agendamento')));
 
 // Usar os roteadores
+app.use('/tipoCortes', tipoCortesRouter);
 app.use('/agendamentos', agendamentosRouter);
-app.use('/tipoCortes', tipoCortesRouter); // Corrigido para tipoCortes
+
+// Rota raiz para servir o arquivo 'tela.html'
+app.get('/', (req, res) => {
+    res.sendFile(path.join(__dirname, 'tela_agendamento', 'tela.html'));
+});
 
 // Conectar ao MongoDB
 mongoose.connect('mongodb://localhost:27017/agendamento-barbearia', {
