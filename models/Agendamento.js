@@ -1,11 +1,30 @@
-const mongoose = require('mongoose');
+const { DataTypes } = require('sequelize');
+const sequelize = require('../mysql'); // Atualize o caminho se necessário
+const TipoCorte = require('./TipoCorte'); // Atualize o caminho se necessário
 
-const AgendamentoSchema = new mongoose.Schema({
-    nomeCliente: { type: String, required: true },
-    tipoCorte: { type: mongoose.Schema.Types.ObjectId, ref: 'TipoCorte', required: true }, // Usando ObjectId para referência
-    dataHora: { type: Date, required: true }
-}, { timestamps: false }); // Desativa os timestamps
+const Agendamento = sequelize.define('Agendamento', {
+    nomeCliente: {
+        type: DataTypes.STRING,
+        allowNull: false
+    },
+    tipoCorte_id: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+        references: {
+            model: TipoCorte, // Referência ao modelo TipoCorte
+            key: 'id' // Chave primária da tabela 'TipoCortes'
+        }
+    },
+    dataHora: {
+        type: DataTypes.DATE,
+        allowNull: false
+    }
+}, {
+    tableName: 'agendamentos', // Nome da tabela no banco de dados
+    timestamps: false // Se a tabela não tem colunas de timestamps
+});
 
-const Agendamento = mongoose.model('Agendamento', AgendamentoSchema);
+// Definir a associação
+Agendamento.belongsTo(TipoCorte, { foreignKey: 'tipoCorte_id', as: 'TipoCorte' });
 
 module.exports = Agendamento;

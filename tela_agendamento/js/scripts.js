@@ -1,32 +1,24 @@
 document.addEventListener('DOMContentLoaded', () => {
-    const tipoCorteSelect = document.getElementById('tipoCorte');
     const agendamentoForm = document.getElementById('agendamento-form');
     const mensagemDiv = document.getElementById('mensagem');
+    const loader = document.getElementById('loader');
+    const tipoCorteSelect = document.getElementById('tipoCorte');
 
-    // Função para carregar os tipos de corte
-    async function carregarTiposDeCorte() {
+    // Função para carregar tipos de corte
+    async function carregarTiposCorte() {
         try {
             const response = await fetch('/tipoCortes');
-            if (!response.ok) throw new Error('Erro ao carregar tipos de corte');
+            if (!response.ok) throw new Error('Erro ao buscar tipos de corte');
             
             const tiposCorte = await response.json();
-
-            if (tiposCorte.length === 0) {
-                tipoCorteSelect.innerHTML = '<option value="">Nenhum tipo de corte disponível</option>';
-                return;
-            }
-
-            tipoCorteSelect.innerHTML = ''; // Limpa opções antigas
-
-            tiposCorte.forEach(tipo => {
+            tiposCorte.forEach(tipoCorte => {
                 const option = document.createElement('option');
-                option.value = tipo._id; // Usa o ObjectId
-                option.textContent = tipo.tipoCorte;
+                option.value = tipoCorte.id;
+                option.textContent = tipoCorte.tipoCorte;
                 tipoCorteSelect.appendChild(option);
             });
         } catch (error) {
-            console.error('Erro:', error);
-            mensagemDiv.textContent = 'Não foi possível carregar os tipos de corte.';
+            console.error('Erro ao carregar tipos de corte:', error);
         }
     }
 
@@ -35,32 +27,39 @@ document.addEventListener('DOMContentLoaded', () => {
         event.preventDefault();
 
         const nomeCliente = document.getElementById('nomeCliente').value;
-        const tipoCorteId = document.getElementById('tipoCorte').value; // Usa o ObjectId
+        const tipoCorteId = document.getElementById('tipoCorte').value;
         const dataHora = document.getElementById('dataHora').value;
 
+        console.log('Dados do formulário:', { nomeCliente, tipoCorteId, dataHora }); // Adiciona log dos dados do formulário
+
         try {
+            loader.style.display = 'block'; // Mostrar o loader enquanto a solicitação é processada
+
             const response = await fetch('/agendamentos', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
                 },
-                body: JSON.stringify({ nomeCliente, tipoCorte: tipoCorteId, dataHora })
+                body: JSON.stringify({ nomeCliente, tipoCorte_id: tipoCorteId, dataHora })
             });
 
             if (!response.ok) throw new Error('Erro ao criar agendamento');
-            
+
             const resultado = await response.json();
+            console.log('Resposta do servidor:', resultado); // Adiciona log da resposta do servidor
             mensagemDiv.textContent = 'Agendamento realizado com sucesso!';
             agendamentoForm.reset();
         } catch (error) {
             console.error('Erro:', error);
             mensagemDiv.textContent = 'Erro ao realizar o agendamento.';
+        } finally {
+            loader.style.display = 'none'; // Ocultar o loader após a solicitação ser processada
         }
     }
 
-    // Carregar tipos de corte ao carregar a página
-    carregarTiposDeCorte();
+    // Carregar os tipos de corte ao carregar a página
+    carregarTiposCorte();
 
-    // Adicionar evento de submissão ao formulário
+    // Adicionar o listener de submit ao formulário
     agendamentoForm.addEventListener('submit', enviarFormulario);
 });

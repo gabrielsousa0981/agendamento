@@ -32,10 +32,13 @@ header {
     margin: 20px auto;
     border-radius: 8px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-    animation: fadeIn 2s ease-in;
+    opacity: 0; /* Inicialmente invisível */
+    transform: translateY(20px); /* Inicialmente movido para baixo */
+    animation: fadeInUp 1s forwards; /* Executa a animação */
 }
 
-@keyframes fadeIn {
+/* Define a animação de entrada */
+@keyframes fadeInUp {
     from {
         opacity: 0;
         transform: translateY(20px);
@@ -79,6 +82,11 @@ button.submit-button:hover {
 }
 
 #mensagem {
+    margin-top: 20px;
+    font-size: 16px;
+}
+
+#loader {
     margin-top: 20px;
     font-size: 16px;
 }

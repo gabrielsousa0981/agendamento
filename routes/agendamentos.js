@@ -1,27 +1,33 @@
 const express = require('express');
 const router = express.Router();
-const Agendamento = require('../models/Agendamento');
+const Agendamento = require('../models/Agendamento'); // Atualize o caminho se necessário
+const TipoCorte = require('../models/TipoCorte'); // Atualize o caminho se necessário
 
-// Rota para listar todos os agendamentos
-router.get('/', async (req, res) => {
+// Rota para criar um agendamento
+router.post('/', async (req, res) => {
+    const { nomeCliente, tipoCorte_id, dataHora } = req.body;
     try {
-        const agendamentos = await Agendamento.find().populate('tipoCorte');
-        res.json(agendamentos);
-    } catch (err) {
-        res.status(500).json({ message: 'Erro ao obter agendamentos.' });
+        const agendamento = await Agendamento.create({ nomeCliente, tipoCorte_id, dataHora });
+        res.json(agendamento);
+    } catch (error) {
+        console.error('Erro ao criar agendamento:', error);
+        res.status(500).json({ message: 'Erro ao criar agendamento.' });
     }
 });
 
-// Rota para criar um novo agendamento
-router.post('/', async (req, res) => {
-    const { nomeCliente, tipoCorte, dataHora } = req.body;
-    
+// Rota para obter todos os agendamentos
+router.get('/', async (req, res) => {
     try {
-        const agendamento = new Agendamento({ nomeCliente, tipoCorte, dataHora });
-        await agendamento.save();
-        res.status(201).json(agendamento);
-    } catch (err) {
-        res.status(500).json({ message: 'Erro ao criar agendamento.' });
+        const agendamentos = await Agendamento.findAll({
+            include: {
+                model: TipoCorte, // Inclui o tipo de corte relacionado
+                as: 'TipoCorte' // Alias usado na associação
+            }
+        });
+        res.json(agendamentos);
+    } catch (error) {
+        console.error('Erro ao obter agendamentos:', error);
+        res.status(500).json({ message: 'Erro ao obter agendamentos.' });
     }
 });
 
