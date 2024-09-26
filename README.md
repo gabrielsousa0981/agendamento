@@ -24,11 +24,4 @@ Este projeto é uma tela de agendamento para uma barbearia, permitindo que os cl
 3. **Edição e Cancelamento de Agendamentos**: (A ser implementada) Funcionalidade para clientes ou funcionários ajustarem agendamentos existentes.
 4. **Notificações**: (A ser implementada) Lembretes automáticos para clientes sobre seus agendamentos.
 
-## Como Contribuir
 
-Para colaborar com o projeto e implementar novas funcionalidades ou correções, siga estas etapas:
-
-1. **Clone o repositório**:
-   ```bash
-   git clone <URL_DO_REPOSITORIO>
-   cd <NOME_DA_PASTA>
