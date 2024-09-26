@@ -1,4 +1,4 @@
-# README - Tela de Agendamento da Barbearia
+Tela de Agendamento da Barbearia
 
 ## Descrição
 
