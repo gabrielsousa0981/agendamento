@@ -1,4 +1,4 @@
-Tela de Agendamento da Barbearia
+# README - Tela de Agendamento da Barbearia
 
 ## Descrição
 
@@ -23,5 +23,4 @@ Este projeto é uma tela de agendamento para uma barbearia, permitindo que os cl
 2. **Visualização de Clientes Agendados**: (A ser implementada) Necessária para mostrar a lista de clientes com agendamentos confirmados.
 3. **Edição e Cancelamento de Agendamentos**: (A ser implementada) Funcionalidade para clientes ou funcionários ajustarem agendamentos existentes.
 4. **Notificações**: (A ser implementada) Lembretes automáticos para clientes sobre seus agendamentos.
-
 
